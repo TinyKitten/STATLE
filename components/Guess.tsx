@@ -21,7 +21,7 @@ const CharacterContainer = styled.div`
 const CharInput = styled.input<{ bgColor: string }>`
   width: 64px;
   height: 64px;
-  font-size: 64px;
+  font-size: 3rem;
   color: ${({ theme }) => theme.text};
   text-align: center;
   appearance: none;
