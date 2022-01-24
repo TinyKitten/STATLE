@@ -2,9 +2,23 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { STATIONS } from "../constants/stations";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
+import Random from "../utils/random";
 import Guess from "./Guess";
 
-const MOCK_ANSWER = STATIONS[0];
+const now = new Date();
+const seed =
+  now.getFullYear() +
+  now.getMonth() +
+  now.getDate() +
+  parseInt(process.env.NEXT_PUBLIC_RANDOM_SEED || "0", 10);
+const rand = new Random(seed);
+const randomInt = rand.nextInt(0, STATIONS.length - 1);
+
+const ANSWER = STATIONS[randomInt];
+
+if (process.env.NODE_ENV === "development") {
+  console.info("ANSWER", ANSWER);
+}
 
 const Container = styled.div`
   margin-top: 32px;
@@ -41,13 +55,11 @@ const HistoryAndGuess = () => {
     setCurrentRound((prev) => prev + 1);
     setCorrectSpotsHistories((prev) => [
       ...prev,
-      chars.map((c, i) => MOCK_ANSWER[i] === c),
+      chars.map((c, i) => ANSWER[i] === c),
     ]);
     setWrongSpotHistories((prev) => [
       ...prev,
-      chars.map(
-        (c, i) => MOCK_ANSWER.indexOf(c) !== -1 && MOCK_ANSWER.indexOf(c) !== i
-      ),
+      chars.map((c, i) => ANSWER.indexOf(c) !== -1 && ANSWER.indexOf(c) !== i),
     ]);
   };
 
