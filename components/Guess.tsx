@@ -21,7 +21,11 @@ const CharacterContainer = styled.div`
 const CharInput = styled.input<{ bgColor: string }>`
   width: 64px;
   height: 64px;
-  font-size: 3rem;
+  font-size: ${typeof window !== "undefined" &&
+  (window.navigator.userAgent.match(/iPad/i) ||
+    window.navigator.userAgent.match(/iPhone/i))
+    ? "1.5rem"
+    : "3rem"};
   color: ${({ theme }) => theme.text};
   text-align: center;
   appearance: none;
@@ -157,6 +161,7 @@ const Guess = ({
           key={index}
           bgColor={(() => getCharInputBGColor(index))()}
           pattern="[a-zA-Z]+"
+          inputMode="url"
           onKeyUp={handleKeyUp}
           disabled={disabled}
         />
