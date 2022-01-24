@@ -29,10 +29,8 @@ const HistoryAndGuess = () => {
     ) {
       alert("you won");
       setFinished(true);
+      return;
     }
-  }, [correctSpotsHistories, currentRound]);
-
-  useEffect(() => {
     if (currentRound > MAX_ROUND) {
       alert("you lose");
       setFinished(true);
