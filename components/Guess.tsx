@@ -12,7 +12,7 @@ import { japaneseCharacterRegexp } from "../constants/regexp";
 import { STATIONS } from "../constants/stations";
 import { MAX_CHAR } from "../constants/threshold";
 
-const CharacterContainer = styled.form`
+const CharacterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,10 +32,6 @@ const CharInput = styled.input<{ bgColor: string }>`
   &:focus {
     outline: none;
   }
-`;
-
-const InvisibleInput = styled.input`
-  display: none;
 `;
 
 type HTMLDataset = {
@@ -90,16 +86,25 @@ const Guess = ({
     const { dataset } = e.currentTarget;
     const { index } = dataset as HTMLDataset;
     const indexNum = parseInt(index, 10);
-    if (e.key === "Backspace") {
-      charInputRefs.current[indexNum - 1]?.focus();
-      if (indexNum === MAX_CHAR - 1) {
-        setCharacters((prev) =>
-          prev.map((_, i) => (i === indexNum ? "" : prev[i]))
-        );
-      } else {
-        setCharacters((prev) =>
-          prev.map((_, i) => (i === indexNum - 1 ? "" : prev[i]))
-        );
+    switch (e.key) {
+      case "Enter": {
+        if (characters.join("").length === MAX_CHAR) {
+          handleSubmit(e);
+        }
+        break;
+      }
+      case "Backspace": {
+        charInputRefs.current[indexNum - 1]?.focus();
+        if (indexNum === MAX_CHAR - 1) {
+          setCharacters((prev) =>
+            prev.map((_, i) => (i === indexNum ? "" : prev[i]))
+          );
+        } else {
+          setCharacters((prev) =>
+            prev.map((_, i) => (i === indexNum - 1 ? "" : prev[i]))
+          );
+        }
+        break;
       }
     }
   };
@@ -141,7 +146,7 @@ const Guess = ({
   );
 
   return (
-    <CharacterContainer onSubmit={handleSubmit}>
+    <CharacterContainer>
       {emptyArray.map((_, index) => (
         <CharInput
           data-index={index}
@@ -156,7 +161,6 @@ const Guess = ({
           disabled={disabled}
         />
       ))}
-      <InvisibleInput type="submit" />
     </CharacterContainer>
   );
 };
