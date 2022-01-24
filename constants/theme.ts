@@ -7,8 +7,8 @@ export type AppPalette = {
 };
 
 export const lightTheme: AppPalette = {
-  background: "#fcfcfc",
-  text: "#212121",
+  background: "#fafafa",
+  text: "#333",
   textSub: "#555",
   edge: "#ccc",
   error: "#FF3232",
