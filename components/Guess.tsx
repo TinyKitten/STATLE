@@ -48,7 +48,7 @@ type Props = {
   correctFlags: boolean[];
   wrongFlags: boolean[];
   focused: boolean;
-  finished: boolean;
+  disabled: boolean;
 };
 
 const Guess = ({
@@ -57,7 +57,7 @@ const Guess = ({
   correctFlags,
   wrongFlags,
   focused,
-  finished,
+  disabled,
 }: Props) => {
   const emptyArray = Array.from<string>({ length: MAX_CHAR }).fill("");
 
@@ -120,7 +120,7 @@ const Guess = ({
 
   const getCharInputBGColor = useCallback(
     (index: number) => {
-      if (!pastGuess && !finished) {
+      if (!pastGuess && !disabled) {
         return "transparent";
       }
 
@@ -131,13 +131,13 @@ const Guess = ({
         return "#D8D500";
       }
 
-      if (finished) {
+      if (disabled) {
         return themeContext.edge;
       }
 
       return themeContext.edge;
     },
-    [correctFlags, finished, pastGuess, themeContext.edge, wrongFlags]
+    [correctFlags, disabled, pastGuess, themeContext.edge, wrongFlags]
   );
 
   return (
@@ -153,7 +153,7 @@ const Guess = ({
           bgColor={(() => getCharInputBGColor(index))()}
           pattern="[a-zA-Z]+"
           onKeyUp={handleKeyUp}
-          disabled={finished}
+          disabled={disabled}
         />
       ))}
       <InvisibleInput type="submit" />

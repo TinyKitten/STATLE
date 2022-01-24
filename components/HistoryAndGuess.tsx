@@ -63,7 +63,7 @@ const HistoryAndGuess = () => {
             wrongFlags={wrongSpotHistories[index]}
             pastGuess={index < currentRound - 1}
             onGuessComplete={handleGuessComplete}
-            finished={finished}
+            disabled={finished || currentRound - 1 < index}
           />
         </GuessContainer>
       ))}
