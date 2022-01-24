@@ -21,9 +21,8 @@ const CharacterContainer = styled.div`
 const CharInput = styled.input<{ bgColor: string }>`
   width: 64px;
   height: 64px;
-  font-size: ${typeof window !== "undefined" &&
-  (window.navigator.userAgent.match(/iPad/i) ||
-    window.navigator.userAgent.match(/iPhone/i))
+  font-size: ${typeof navigator !== "undefined" &&
+  /ipod|ipad|iphone|macintosh/.test(navigator.userAgent.toLowerCase())
     ? "1.5rem"
     : "3rem"};
   color: ${({ theme }) => theme.text};
