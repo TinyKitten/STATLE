@@ -20,7 +20,7 @@ const AppMotto = styled.p`
 const Header = () => {
   return (
     <Contianer>
-      <AppName>STATLE(ALPHA VERSION)</AppName>
+      <AppName>STATLE(BETA VERSION)</AppName>
       <AppMotto>JAPANESE TRAIN STATION GUESSNING GAME</AppMotto>
     </Contianer>
   );
