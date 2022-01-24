@@ -25,6 +25,9 @@ const AuthorLink = styled.a`
 const Footer = () => {
   return (
     <Contianer>
+      <AuthorLink href="https://www.powerlanguage.co.uk/wordle/">
+        INSPIRED BY WORDLE
+      </AuthorLink>
       <AuthorText>AUTHOR: TinyKitten</AuthorText>
       <AuthorLink href="https://tinykitten.me">PORTFOLIO</AuthorLink>
       <AuthorLink href="https://twitter.com/tinykitten8">TWITTER</AuthorLink>
