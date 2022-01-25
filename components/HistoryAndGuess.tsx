@@ -49,13 +49,13 @@ const HistoryAndGuess = () => {
       return;
     }
     if (currentRound > MAX_ROUND) {
-      alert("you lose");
+      alert(`you lose the correct answer is: ${answer}`);
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
       }));
     }
-  }, [correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
+  }, [answer, correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
 
   const handleGuessComplete = (chars: string[]) => {
     setGuess((prev) => ({
