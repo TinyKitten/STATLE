@@ -52,7 +52,7 @@ export default class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta
             property="og:image"
-            content="https://statle.tinykitten.me/ogp-202201250253.png"
+            content="https://statle.tinykitten.me/ogp-202201260054.png"
           />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
