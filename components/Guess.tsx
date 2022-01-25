@@ -71,9 +71,14 @@ const Guess = ({
 
   const handleCharChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const { value: v, dataset } = e.currentTarget;
+
     const { index } = dataset as HTMLDataset;
     const indexNum = parseInt(index, 10);
     const value = v.toUpperCase();
+
+    if (!value.trim().length || value.trim().length !== 1) {
+      return;
+    }
 
     if (value.length && value.match(japaneseCharacterRegexp)) {
       return;

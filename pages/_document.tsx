@@ -38,7 +38,6 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>STATLE</title>
           <meta
             name="description"
             content="JAPANESE TRAIN STATION GUESSNING GAME"
