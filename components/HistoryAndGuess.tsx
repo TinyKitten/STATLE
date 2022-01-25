@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
 import useAnswer from "../hooks/useAnswer";
@@ -7,6 +7,8 @@ import useInitGuess from "../hooks/useInitGuess";
 import useSeed from "../hooks/useSeed";
 import guessAtom from "../state/guess";
 import Guess from "./Guess";
+import LoseModal from "./LoseModal";
+import WonModal from "./WonModal";
 
 const Container = styled.div`
   margin-top: 32px;
@@ -17,6 +19,9 @@ const GuessContainer = styled.div`
 `;
 
 const HistoryAndGuess = () => {
+  const [wonModalOpen, setWonModalOpen] = useState(false);
+  const [loseModalOpen, setLoseModalOpen] = useState(false);
+
   const seed = useSeed();
   const answer = useAnswer(seed);
   const [
@@ -41,7 +46,7 @@ const HistoryAndGuess = () => {
       correctSpotsHistories[currentRound - 2]?.filter((flag) => flag).length ===
       MAX_CHAR
     ) {
-      alert("you won");
+      setWonModalOpen(true);
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
@@ -49,7 +54,7 @@ const HistoryAndGuess = () => {
       return;
     }
     if (currentRound > MAX_ROUND) {
-      alert(`you lose the correct answer is: ${answer}`);
+      setLoseModalOpen(true);
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
@@ -74,6 +79,9 @@ const HistoryAndGuess = () => {
       nameHistories: [...prev.nameHistories, chars],
     }));
   };
+
+  const handleWonModalClose = () => setWonModalOpen(false);
+  const handleLoseModalClose = () => setLoseModalOpen(false);
 
   const finished = lastSeed === seed;
 
@@ -100,6 +108,8 @@ const HistoryAndGuess = () => {
             />
           </GuessContainer>
         ))}
+      <WonModal isOpen={wonModalOpen} onRequestClose={handleWonModalClose} />
+      <LoseModal isOpen={loseModalOpen} onRequestClose={handleLoseModalClose} />
     </Container>
   );
 };

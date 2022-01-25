@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import Modal from "react-modal";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
@@ -26,6 +27,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.background};
   min-height: 100vh;
 `;
+Modal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { appearance, themeReady } = useAppearance();

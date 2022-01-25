@@ -7,10 +7,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled, { ThemeContext } from "styled-components";
 import { japaneseCharacterRegexp } from "../constants/regexp";
 import { STATIONS } from "../constants/stations";
 import { MAX_CHAR } from "../constants/threshold";
+import useAppearance from "../hooks/useAppearance";
 
 const CharacterContainer = styled.div`
   display: flex;
@@ -62,6 +65,8 @@ const Guess = ({
 }: Props) => {
   const charInputRefs = useRef<HTMLInputElement[] | null[]>(Array.from([]));
   const [characters, setCharacters] = useState<string[]>(value);
+
+  const { appearance } = useAppearance();
 
   useEffect(() => {
     if (focused) {
@@ -127,7 +132,7 @@ const Guess = ({
     const joined = characters.join("");
     if (joined.length === MAX_CHAR) {
       if (STATIONS.findIndex((s) => s === joined) === -1) {
-        alert("Not in station list.");
+        toast("Not in station list.");
         return;
       }
       onGuessComplete(characters);
@@ -175,6 +180,18 @@ const Guess = ({
           disabled={disabled}
         />
       ))}
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        theme={appearance === "dark" ? "dark" : "light"}
+      />
     </CharacterContainer>
   );
 };
