@@ -74,13 +74,24 @@ const Guess = ({
 
     const { index } = dataset as HTMLDataset;
     const indexNum = parseInt(index, 10);
-    const value = v.toUpperCase();
+    const value = v.trim().toUpperCase();
 
-    if (!value.trim().length || value.trim().length !== 1) {
+    if (!value.length) {
+      setCharacters(characters.map((prev, i) => (i === indexNum ? "" : prev)));
       return;
     }
 
-    if (value.length && value.match(japaneseCharacterRegexp)) {
+    if (value.match(japaneseCharacterRegexp)) {
+      return;
+    }
+
+    if (value.length === 2) {
+      setCharacters(
+        characters.map((prev, i) =>
+          i === indexNum + 1 ? value.split("")[1] : prev
+        )
+      );
+      charInputRefs.current[indexNum + 1]?.focus();
       return;
     }
 
@@ -103,15 +114,9 @@ const Guess = ({
       }
       case "Backspace": {
         charInputRefs.current[indexNum - 1]?.focus();
-        if (indexNum === MAX_CHAR - 1) {
-          setCharacters((prev) =>
-            prev.map((_, i) => (i === indexNum ? "" : prev[i]))
-          );
-        } else {
-          setCharacters((prev) =>
-            prev.map((_, i) => (i === indexNum - 1 ? "" : prev[i]))
-          );
-        }
+        setCharacters((prev) =>
+          prev.map((_, i) => (i === indexNum ? "" : prev[i]))
+        );
         break;
       }
     }
@@ -161,7 +166,7 @@ const Guess = ({
           ref={(el) => (charInputRefs.current[index] = el)}
           value={characters[index]}
           onChange={handleCharChange}
-          maxLength={1}
+          maxLength={2} // BS直後の入力用 実際2文字になったときは後ろの値を使う
           key={index}
           bgColor={(() => getCharInputBGColor(index))()}
           pattern="[a-zA-Z]+"
