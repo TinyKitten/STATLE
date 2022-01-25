@@ -170,7 +170,7 @@ const Guess = ({
           key={index}
           bgColor={(() => getCharInputBGColor(index))()}
           pattern="[a-zA-Z]+"
-          inputMode="url"
+          inputMode="search"
           onKeyUp={handleKeyUp}
           disabled={disabled}
         />
