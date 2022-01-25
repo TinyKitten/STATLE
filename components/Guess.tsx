@@ -48,6 +48,7 @@ type Props = {
   wrongFlags: boolean[];
   focused: boolean;
   disabled: boolean;
+  value: string[];
 };
 
 const Guess = ({
@@ -57,11 +58,10 @@ const Guess = ({
   wrongFlags,
   focused,
   disabled,
+  value,
 }: Props) => {
-  const emptyArray = Array.from<string>({ length: MAX_CHAR }).fill("");
-
   const charInputRefs = useRef<HTMLInputElement[] | null[]>(Array.from([]));
-  const [characters, setCharacters] = useState<string[]>(emptyArray);
+  const [characters, setCharacters] = useState<string[]>(value);
 
   useEffect(() => {
     if (focused) {
@@ -160,7 +160,7 @@ const Guess = ({
 
   return (
     <CharacterContainer>
-      {emptyArray.map((_, index) => (
+      {value.map((_, index) => (
         <CharInput
           data-index={index}
           ref={(el) => (charInputRefs.current[index] = el)}

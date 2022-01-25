@@ -1,24 +1,12 @@
-import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import styled from "styled-components";
-import { STATIONS } from "../constants/stations";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
-import Random from "../utils/random";
+import useAnswer from "../hooks/useAnswer";
+import useInitGuess from "../hooks/useInitGuess";
+import useSeed from "../hooks/useSeed";
+import guessAtom from "../state/guess";
 import Guess from "./Guess";
-
-const now = new Date();
-const seed =
-  now.getFullYear() +
-  now.getMonth() +
-  now.getDate() +
-  parseInt(process.env.NEXT_PUBLIC_RANDOM_SEED || "0", 10);
-const rand = new Random(seed);
-const randomInt = rand.nextInt(0, STATIONS.length - 1);
-
-const ANSWER = STATIONS[randomInt];
-
-if (process.env.NODE_ENV === "development") {
-  console.info("ANSWER", ANSWER);
-}
 
 const Container = styled.div`
   margin-top: 32px;
@@ -29,54 +17,89 @@ const GuessContainer = styled.div`
 `;
 
 const HistoryAndGuess = () => {
-  const [currentRound, setCurrentRound] = useState<number>(1);
-  const [correctSpotsHistories, setCorrectSpotsHistories] = useState<
-    boolean[][]
-  >([]);
-  const [wrongSpotHistories, setWrongSpotHistories] = useState<boolean[][]>([]);
-  const [finished, setFinished] = useState(false);
+  const seed = useSeed();
+  const answer = useAnswer(seed);
+  const [
+    {
+      correctSpotsHistories,
+      wrongSpotHistories,
+      currentRound,
+      lastSeed,
+      nameHistories,
+    },
+    setGuess,
+  ] = useAtom(guessAtom);
+
+  const appReady = useInitGuess();
 
   useEffect(() => {
+    if (lastSeed) {
+      return;
+    }
+
     if (
       correctSpotsHistories[currentRound - 2]?.filter((flag) => flag).length ===
       MAX_CHAR
     ) {
       alert("you won");
-      setFinished(true);
+      setGuess((prev) => ({
+        ...prev,
+        lastSeed: seed,
+      }));
       return;
     }
     if (currentRound > MAX_ROUND) {
       alert("you lose");
-      setFinished(true);
+      setGuess((prev) => ({
+        ...prev,
+        lastSeed: seed,
+      }));
     }
-  }, [correctSpotsHistories, currentRound]);
+  }, [correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
 
   const handleGuessComplete = (chars: string[]) => {
-    setCurrentRound((prev) => prev + 1);
-    setCorrectSpotsHistories((prev) => [
+    setGuess((prev) => ({
       ...prev,
-      chars.map((c, i) => ANSWER[i] === c),
-    ]);
-    setWrongSpotHistories((prev) => [
-      ...prev,
-      chars.map((c, i) => ANSWER.indexOf(c) !== -1 && ANSWER.indexOf(c) !== i),
-    ]);
+      currentRound: prev.currentRound + 1,
+      correctSpotsHistories: [
+        ...prev.correctSpotsHistories,
+        chars.map((c, i) => answer[i] === c),
+      ],
+      wrongSpotHistories: [
+        ...prev.wrongSpotHistories,
+        chars.map(
+          (c, i) => answer.indexOf(c) !== -1 && answer.indexOf(c) !== i
+        ),
+      ],
+      nameHistories: [...prev.nameHistories, chars],
+    }));
   };
+
+  const finished = lastSeed === seed;
+
+  if (!appReady) {
+    return null;
+  }
 
   return (
     <Container>
-      {Array.from({ length: MAX_ROUND }).map((_, index) => (
-        <GuessContainer key={index}>
-          <Guess
-            focused={currentRound - 1 === index}
-            correctFlags={correctSpotsHistories[index]}
-            wrongFlags={wrongSpotHistories[index]}
-            pastGuess={index < currentRound - 1}
-            onGuessComplete={handleGuessComplete}
-            disabled={finished || currentRound - 1 < index}
-          />
-        </GuessContainer>
-      ))}
+      {Array.from({ length: MAX_ROUND })
+        .map(
+          (_, index) => nameHistories[index] || Array.from({ length: MAX_CHAR })
+        )
+        .map((value, index) => (
+          <GuessContainer key={index}>
+            <Guess
+              value={value}
+              focused={currentRound - 1 === index}
+              correctFlags={correctSpotsHistories[index]}
+              wrongFlags={wrongSpotHistories[index]}
+              pastGuess={index < currentRound - 1}
+              onGuessComplete={handleGuessComplete}
+              disabled={finished || currentRound - 1 < index}
+            />
+          </GuessContainer>
+        ))}
     </Container>
   );
 };
