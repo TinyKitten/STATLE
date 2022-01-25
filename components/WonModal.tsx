@@ -24,12 +24,13 @@ const CloseButton = styled.button`
   appearance: none;
   display: block;
   background-color: ${({ theme }) => theme.backgroundSub};
-  border: ${({ theme }) => `1px solid ${theme.edge}`};
+  /* border: ${({ theme }) => `1px solid ${theme.edge}`}; */
+  border: none;
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
   padding: 12px 32px;
   border-radius: 4px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   font-weight: bold;
 `;
 
