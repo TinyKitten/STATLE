@@ -9,7 +9,6 @@ const useInitGuess = () => {
   const [{ lastSeed }, setGuess] = useAtom(guessAtom);
 
   useEffect(() => {
-    console.log(lastSeed, seed, lastSeed !== seed);
     if (lastSeed !== seed) {
       setGuess(INITIAL_GUESS_ATOM_VALUE);
     }
