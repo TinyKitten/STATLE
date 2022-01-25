@@ -143,10 +143,10 @@ const Guess = ({
       }
 
       if (correctFlags?.find((_, i) => i === index)) {
-        return "#008000";
+        return "#66ac51";
       }
       if (wrongFlags?.find((_, i) => i === index)) {
-        return "#D8D500";
+        return "#d7b620";
       }
 
       if (disabled) {
