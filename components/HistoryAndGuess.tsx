@@ -27,7 +27,6 @@ const generateShareResult: (
   let histories: string[] = [];
   nameHistories.forEach((name, i) => {
     let row = "";
-    console.log(name);
     name.forEach((_, j) => {
       if (correctSpotsHistories[i][j]) {
         row += CORRECT_EMOJI;
@@ -37,12 +36,10 @@ const generateShareResult: (
         row += OTHER_EMOJI;
       }
       if (name.length - 1 === j) {
-        console.log(row);
         histories.push(row);
       }
     });
   });
-  console.log(histories);
   return histories.join("\n");
 };
 
@@ -123,8 +120,7 @@ const HistoryAndGuess = () => {
         .share({
           text: shareText,
           url: "https://statle.tinykitten.me",
-        })
-        .catch((_) => console.log("シェアモーダルが閉じられたけど別にいい"));
+        });
     } else {
       window.open(
         `https://twitter.com/intent/tweet?text=${encodeURI(

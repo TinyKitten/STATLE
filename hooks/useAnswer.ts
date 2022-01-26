@@ -15,6 +15,7 @@ const useAnswer = (seed?: number) => {
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
       console.info("ANSWER", ANSWER);
     }
   }, [ANSWER]);
