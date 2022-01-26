@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 
 const styles: ReactModal.Styles = {
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
   content: {
     top: "50%",
@@ -26,7 +26,12 @@ type Props = {
 
 const AppModal = ({ isOpen, onRequestClose, children }: Props) => {
   return (
-    <ReactModal isOpen={isOpen} onRequestClose={onRequestClose} style={styles}>
+    <ReactModal
+      closeTimeoutMS={250}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      style={styles}
+    >
       {children}
     </ReactModal>
   );

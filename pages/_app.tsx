@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
+import "../styles/modal.css";
 
 const GlobalStyle = createGlobalStyle`
   html,
