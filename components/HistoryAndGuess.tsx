@@ -112,7 +112,7 @@ const HistoryAndGuess = () => {
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
   const handleShare = () => {
-    const shareText = `${`STATLE ${date} ${currentRound}/6`}\n\n${generateShareResult(
+    const shareText = `${`STATLE ${date} ${currentRound - 1}/6`}\n\n${generateShareResult(
       nameHistories,
       correctSpotsHistories,
       wrongSpotHistories
