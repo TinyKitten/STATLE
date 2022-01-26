@@ -44,7 +44,7 @@ const Footer = () => {
           withoutVerticalMargin
           href="https://www.powerlanguage.co.uk/wordle/"
         >
-          WORDLE
+          Wordle
         </AuthorLink>
       </LinkContainer>
       <AuthorText>作ったのはね: TinyKitten</AuthorText>
