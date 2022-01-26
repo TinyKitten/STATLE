@@ -5,7 +5,7 @@ import useSeed from "./useSeed";
 
 const useInitGuess = () => {
   const [ready, setReady] = useState(false);
-  const seed = useSeed();
+  const { seed } = useSeed();
   const [{ lastSeed }, setGuess] = useAtom(guessAtom);
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import Random from "../utils/random";
 import useSeed from "./useSeed";
 
 const useAnswer = (seed?: number) => {
-  const defaultSeed = useSeed();
+  const { seed: defaultSeed } = useSeed();
   const ANSWER = useMemo(() => {
     const s = seed || defaultSeed;
     const rand = new Random(s);

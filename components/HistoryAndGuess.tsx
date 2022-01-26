@@ -22,7 +22,7 @@ const HistoryAndGuess = () => {
   const [wonModalOpen, setWonModalOpen] = useState(false);
   const [loseModalOpen, setLoseModalOpen] = useState(false);
 
-  const seed = useSeed();
+  const { seed } = useSeed();
   const answer = useAnswer(seed);
   const [
     {
