@@ -19,7 +19,11 @@ const GuessContainer = styled.div`
   margin: 4px 0;
 `;
 
-const generateShareResult: (nameHistories: string[][], correctSpotsHistories: boolean[][], wrongSpotsHistories: boolean[][]) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) => {
+const generateShareResult: (
+  nameHistories: string[][],
+  correctSpotsHistories: boolean[][],
+  wrongSpotsHistories: boolean[][]
+) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) => {
   let histories: string[] = [];
   nameHistories.forEach((name, i) => {
     let row = "";
@@ -108,15 +112,25 @@ const HistoryAndGuess = () => {
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
   const handleShare = () => {
-    const shareText = `${`STATLE ${date} ${currentRound}/6`}\n\n${generateShareResult(nameHistories, correctSpotsHistories, wrongSpotHistories)}\n`;
+    const shareText = `${`STATLE ${date} ${currentRound}/6`}\n\n${generateShareResult(
+      nameHistories,
+      correctSpotsHistories,
+      wrongSpotHistories
+    )}\n`;
     // ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
     if (window.navigator.share) {
-      window.navigator.share({
-        text: shareText,
-        url: "https://statle.tinykitten.me",
-      }).catch(_ => console.log("シェアモーダルが閉じられたけど別にいい"));
+      window.navigator
+        .share({
+          text: shareText,
+          url: "https://statle.tinykitten.me",
+        })
+        .catch((_) => console.log("シェアモーダルが閉じられたけど別にいい"));
     } else {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURI(shareText)}&url=${encodeURI("https://statle.tinykitten.me")}&related=TinyKitten`);
+      window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURI(
+          shareText
+        )}&url=${encodeURI("https://statle.tinykitten.me")}&related=TinyKitten`
+      );
     }
   };
 
@@ -145,7 +159,11 @@ const HistoryAndGuess = () => {
             />
           </GuessContainer>
         ))}
-      <WonModal isOpen={wonModalOpen} onRequestClose={handleWonModalClose} onClickShare={handleShare} />
+      <WonModal
+        isOpen={wonModalOpen}
+        onRequestClose={handleWonModalClose}
+        onClickShare={handleShare}
+      />
       <LoseModal isOpen={loseModalOpen} onRequestClose={handleLoseModalClose} />
     </Container>
   );
