@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { CORRECT_EMOJI, OTHER_EMOJI, WRONG_EMOJI } from "../constants/share";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
 import useAnswer from "../hooks/useAnswer";
 import useInitGuess from "../hooks/useInitGuess";
@@ -18,11 +19,34 @@ const GuessContainer = styled.div`
   margin: 4px 0;
 `;
 
+const generateShareResult: (nameHistories: string[][], correctSpotsHistories: boolean[][], wrongSpotsHistories: boolean[][]) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) => {
+  let histories: string[] = [];
+  nameHistories.forEach((name, i) => {
+    let row = "";
+    console.log(name);
+    name.forEach((_, j) => {
+      if (correctSpotsHistories[i][j]) {
+        row += CORRECT_EMOJI;
+      } else if (wrongSpotsHistories[i][j]) {
+        row += WRONG_EMOJI;
+      } else {
+        row += OTHER_EMOJI;
+      }
+      if (name.length - 1 === j) {
+        console.log(row);
+        histories.push(row);
+      }
+    });
+  });
+  console.log(histories);
+  return histories.join("\n");
+};
+
 const HistoryAndGuess = () => {
   const [wonModalOpen, setWonModalOpen] = useState(false);
   const [loseModalOpen, setLoseModalOpen] = useState(false);
 
-  const { seed } = useSeed();
+  const { seed, date } = useSeed();
   const answer = useAnswer(seed);
   const [
     {
@@ -83,6 +107,19 @@ const HistoryAndGuess = () => {
   const handleWonModalClose = () => setWonModalOpen(false);
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
+  const handleShare = () => {
+    const shareText = `${`STATLE ${date} ${currentRound}/6`}\n\n${generateShareResult(nameHistories, correctSpotsHistories, wrongSpotHistories)}\n`;
+    // ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
+    if (window.navigator.share) {
+      window.navigator.share({
+        text: shareText,
+        url: "https://statle.tinykitten.me",
+      }).catch(_ => console.log("シェアモーダルが閉じられたけど別にいい"));
+    } else {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURI(shareText)}&url=${encodeURI("https://statle.tinykitten.me")}&related=TinyKitten`);
+    }
+  };
+
   const finished = lastSeed === seed;
 
   if (!appReady) {
@@ -108,7 +145,7 @@ const HistoryAndGuess = () => {
             />
           </GuessContainer>
         ))}
-      <WonModal isOpen={wonModalOpen} onRequestClose={handleWonModalClose} />
+      <WonModal isOpen={wonModalOpen} onRequestClose={handleWonModalClose} onClickShare={handleShare} />
       <LoseModal isOpen={loseModalOpen} onRequestClose={handleLoseModalClose} />
     </Container>
   );

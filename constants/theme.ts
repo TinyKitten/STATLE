@@ -1,4 +1,5 @@
 export type AppPalette = {
+  primary: string;
   background: string;
   backgroundSub: string;
   text: string;
@@ -8,6 +9,7 @@ export type AppPalette = {
 };
 
 export const lightTheme: AppPalette = {
+  primary: "#008ffe",
   background: "#fafafa",
   backgroundSub: "#f5f5f5",
   text: "#333",
@@ -17,6 +19,7 @@ export const lightTheme: AppPalette = {
 };
 
 export const darkTheme: AppPalette = {
+  primary: "#008ffe",
   background: "#212121",
   backgroundSub: "#303030",
   text: "#fcfcfc",
