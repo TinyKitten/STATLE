@@ -5,6 +5,7 @@ import AppModal from "./AppModal";
 type Props = {
   isOpen: boolean;
   onRequestClose: () => void;
+  onShareClick: () => void;
 };
 
 const Container = styled.div`
@@ -17,8 +18,17 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h2`
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   color: ${({ theme }) => theme.text};
+`;
+
+const ButtonsContainer = styled.div`
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  margin-top: 24px;
 `;
 
 const CorrectAnswerText = styled.p`
@@ -26,24 +36,30 @@ const CorrectAnswerText = styled.p`
   color: ${({ theme }) => theme.text};
 `;
 
-const CloseButtonContainer = styled.div`
-  margin-top: 24px;
-`;
-
-const CloseButton = styled.button`
+const BaseButton = styled.div`
   appearance: none;
+  cursor: pointer;
   display: block;
-  background-color: ${({ theme }) => theme.backgroundSub};
   border: none;
-  color: ${({ theme }) => theme.text};
   font-size: 1rem;
-  padding: 12px 32px;
+  padding: 12px 0;
+  width: 100%;
   border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   font-weight: bold;
 `;
 
-const LoseModal = ({ isOpen, onRequestClose }: Props) => {
+const ShareButton = styled(BaseButton)`
+  background-color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.text};
+`;
+
+const CloseButton = styled(BaseButton)`
+  background-color: ${({ theme }) => theme.backgroundSub};
+  color: ${({ theme }) => theme.text};
+`;
+
+const LoseModal = ({ isOpen, onRequestClose, onShareClick }: Props) => {
   const answer = useAnswer();
 
   return (
@@ -53,9 +69,10 @@ const LoseModal = ({ isOpen, onRequestClose }: Props) => {
         <CorrectAnswerText>
           正しかったのはね: <b>{answer}</b>
         </CorrectAnswerText>
-        <CloseButtonContainer>
+        <ButtonsContainer>
+          <ShareButton onClick={onShareClick}>シェアする</ShareButton>
           <CloseButton onClick={onRequestClose}>閉じる</CloseButton>
-        </CloseButtonContainer>
+        </ButtonsContainer>
       </Container>
     </AppModal>
   );

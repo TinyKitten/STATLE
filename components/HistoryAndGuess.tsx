@@ -109,18 +109,19 @@ const HistoryAndGuess = () => {
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
   const handleShare = () => {
-    const shareText = `${`STATLE ${date} ${currentRound - 1}/6`}\n\n${generateShareResult(
+    const shareText = `${`STATLE ${date} ${
+      currentRound - 1
+    }/6`}\n\n${generateShareResult(
       nameHistories,
       correctSpotsHistories,
       wrongSpotHistories
     )}\n`;
     // ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
     if (window.navigator.share) {
-      window.navigator
-        .share({
-          text: shareText,
-          url: "https://statle.tinykitten.me",
-        });
+      window.navigator.share({
+        text: shareText,
+        url: "https://statle.tinykitten.me",
+      });
     } else {
       window.open(
         `https://twitter.com/intent/tweet?text=${encodeURI(
@@ -158,9 +159,13 @@ const HistoryAndGuess = () => {
       <WonModal
         isOpen={wonModalOpen}
         onRequestClose={handleWonModalClose}
-        onClickShare={handleShare}
+        onShareClick={handleShare}
       />
-      <LoseModal isOpen={loseModalOpen} onRequestClose={handleLoseModalClose} />
+      <LoseModal
+        isOpen={loseModalOpen}
+        onRequestClose={handleLoseModalClose}
+        onShareClick={handleShare}
+      />
     </Container>
   );
 };

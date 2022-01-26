@@ -4,7 +4,7 @@ import AppModal from "./AppModal";
 type Props = {
   isOpen: boolean;
   onRequestClose: () => void;
-  onClickShare: () => void;
+  onShareClick: () => void;
 };
 
 const Container = styled.div`
@@ -27,6 +27,7 @@ const ButtonsContainer = styled.div`
   flex-direction: column;
   text-align: center;
   gap: 1rem;
+  margin-top: 12px;
 `;
 
 const BaseButton = styled.div`
@@ -49,17 +50,16 @@ const ShareButton = styled(BaseButton)`
 
 const CloseButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.backgroundSub};
-  /* border: ${({ theme }) => `1px solid ${theme.edge}`}; */
   color: ${({ theme }) => theme.text};
 `;
 
-const WonModal = ({ isOpen, onClickShare, onRequestClose }: Props) => {
+const WonModal = ({ isOpen, onShareClick, onRequestClose }: Props) => {
   return (
     <AppModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <Container>
         <Heading>えらいっ</Heading>
         <ButtonsContainer>
-          <ShareButton onClick={onClickShare}>シェアする</ShareButton>
+          <ShareButton onClick={onShareClick}>シェアする</ShareButton>
           <CloseButton onClick={onRequestClose}>閉じる</CloseButton>
         </ButtonsContainer>
       </Container>
