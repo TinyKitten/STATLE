@@ -28,7 +28,6 @@ const LinkContainer = styled.p`
   margin: 0;
   text-align: center;
   font-weight: bold;
-  display: block;
   margin: 8px 0;
   display: flex;
   justify-content: center;
