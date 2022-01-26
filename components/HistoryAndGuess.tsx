@@ -40,6 +40,10 @@ const HistoryAndGuess = () => {
   const appReady = useInitGuess();
 
   useEffect(() => {
+    if (lastSeed !== seed) {
+      return;
+    }
+
     if (
       correctSpotsHistories[currentRound - 2]?.filter((flag) => flag).length ===
       MAX_CHAR
