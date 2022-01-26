@@ -132,7 +132,7 @@ const Guess = ({
     const joined = characters.join("");
     if (joined.length === MAX_CHAR) {
       if (STATIONS.findIndex((s) => s === joined) === -1) {
-        toast("Not in station list.");
+        toast("駅名リストにないよ");
         return;
       }
       onGuessComplete(characters);
@@ -183,7 +183,7 @@ const Guess = ({
       <ToastContainer
         position="top-center"
         autoClose={3000}
-        hideProgressBar={false}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}

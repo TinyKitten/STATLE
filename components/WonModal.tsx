@@ -16,8 +16,12 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h2`
-  margin: 0 0 32px 0;
+  margin: 0 0 12px 0;
   color: ${({ theme }) => theme.text};
+`;
+
+const CloseButtonContainer = styled.div`
+  margin-top: 24px;
 `;
 
 const CloseButton = styled.button`
@@ -34,12 +38,20 @@ const CloseButton = styled.button`
   font-weight: bold;
 `;
 
+const TODOText = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.text};
+`;
+
 const WonModal = ({ isOpen, onRequestClose }: Props) => {
   return (
     <AppModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <Container>
-        <Heading>YOU WON THE GAME!</Heading>
-        <CloseButton onClick={onRequestClose}>CLOSE</CloseButton>
+        <Heading>えらいっ</Heading>
+        <TODOText>シェア機能そのうち実装するよ</TODOText>
+        <CloseButtonContainer>
+          <CloseButton onClick={onRequestClose}>閉じる</CloseButton>
+        </CloseButtonContainer>
       </Container>
     </AppModal>
   );

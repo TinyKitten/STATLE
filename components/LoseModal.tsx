@@ -34,7 +34,6 @@ const CloseButton = styled.button`
   appearance: none;
   display: block;
   background-color: ${({ theme }) => theme.backgroundSub};
-  /* border: ${({ theme }) => `1px solid ${theme.edge}`}; */
   border: none;
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
@@ -50,12 +49,12 @@ const LoseModal = ({ isOpen, onRequestClose }: Props) => {
   return (
     <AppModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <Container>
-        <Heading>YOU LOSE THE GAME!</Heading>
+        <Heading>GAME OVER</Heading>
         <CorrectAnswerText>
-          The correct answer is: <b>{answer}</b>
+          正しかったのはね: <b>{answer}</b>
         </CorrectAnswerText>
         <CloseButtonContainer>
-          <CloseButton onClick={onRequestClose}>CLOSE</CloseButton>
+          <CloseButton onClick={onRequestClose}>閉じる</CloseButton>
         </CloseButtonContainer>
       </Container>
     </AppModal>

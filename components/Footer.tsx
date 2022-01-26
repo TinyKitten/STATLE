@@ -12,25 +12,44 @@ const AuthorText = styled.p`
   font-weight: bold;
 `;
 
-const AuthorLink = styled.a`
+const AuthorLink = styled.a<{ withoutVerticalMargin?: boolean }>`
+  color: ${({ theme }) => theme.textSub};
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+  display: block;
+  margin: ${({ withoutVerticalMargin }) =>
+    withoutVerticalMargin ? "0" : "4px 0"};
+  text-decoration: underline;
+`;
+
+const LinkContainer = styled.p`
   color: ${({ theme }) => theme.textSub};
   margin: 0;
   text-align: center;
   font-weight: bold;
   display: block;
   margin: 8px 0;
-  text-decoration: underline;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Footer = () => {
   return (
     <Contianer>
-      <AuthorLink href="https://www.powerlanguage.co.uk/wordle/">
-        INSPIRED BY WORDLE
-      </AuthorLink>
-      <AuthorText>AUTHOR: TinyKitten</AuthorText>
-      <AuthorLink href="https://tinykitten.me">PORTFOLIO</AuthorLink>
-      <AuthorLink href="https://twitter.com/tinykitten8">TWITTER</AuthorLink>
+      <LinkContainer>
+        元ネタ:&nbsp;
+        <AuthorLink
+          withoutVerticalMargin
+          href="https://www.powerlanguage.co.uk/wordle/"
+        >
+          WORDLE
+        </AuthorLink>
+      </LinkContainer>
+      <AuthorText>作ったのはね: TinyKitten</AuthorText>
+      <AuthorLink href="https://tinykitten.me">ポートフォリオ</AuthorLink>
+      <AuthorLink href="https://twitter.com/tinykitten8">Twitter</AuthorLink>
     </Contianer>
   );
 };
