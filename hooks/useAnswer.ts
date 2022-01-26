@@ -4,7 +4,7 @@ import Random from "../utils/random";
 import useSeed from "./useSeed";
 
 const useAnswer = (seed?: number) => {
-  const defaultSeed = useSeed();
+  const { seed: defaultSeed } = useSeed();
   const ANSWER = useMemo(() => {
     const s = seed || defaultSeed;
     const rand = new Random(s);
@@ -15,6 +15,7 @@ const useAnswer = (seed?: number) => {
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
       console.info("ANSWER", ANSWER);
     }
   }, [ANSWER]);

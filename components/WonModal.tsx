@@ -4,6 +4,7 @@ import AppModal from "./AppModal";
 type Props = {
   isOpen: boolean;
   onRequestClose: () => void;
+  onClickShare: () => void;
 };
 
 const Container = styled.div`
@@ -20,38 +21,47 @@ const Heading = styled.h2`
   color: ${({ theme }) => theme.text};
 `;
 
-const CloseButtonContainer = styled.div`
-  margin-top: 24px;
+const ButtonsContainer = styled.div`
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
 `;
 
-const CloseButton = styled.button`
+const BaseButton = styled.div`
   appearance: none;
+  cursor: pointer;
   display: block;
-  background-color: ${({ theme }) => theme.backgroundSub};
-  /* border: ${({ theme }) => `1px solid ${theme.edge}`}; */
   border: none;
-  color: ${({ theme }) => theme.text};
   font-size: 1rem;
-  padding: 12px 32px;
+  padding: 12px 0;
+  width: 100%;
   border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   font-weight: bold;
 `;
 
-const TODOText = styled.p`
-  margin: 0;
+const ShareButton = styled(BaseButton)`
+  background-color: ${({ theme }) => theme.primary};
   color: ${({ theme }) => theme.text};
 `;
 
-const WonModal = ({ isOpen, onRequestClose }: Props) => {
+const CloseButton = styled(BaseButton)`
+  background-color: ${({ theme }) => theme.backgroundSub};
+  /* border: ${({ theme }) => `1px solid ${theme.edge}`}; */
+  color: ${({ theme }) => theme.text};
+`;
+
+const WonModal = ({ isOpen, onClickShare, onRequestClose }: Props) => {
   return (
     <AppModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <Container>
         <Heading>えらいっ</Heading>
-        <TODOText>シェア機能そのうち実装するよ</TODOText>
-        <CloseButtonContainer>
+        <ButtonsContainer>
+          <ShareButton onClick={onClickShare}>シェアする</ShareButton>
           <CloseButton onClick={onRequestClose}>閉じる</CloseButton>
-        </CloseButtonContainer>
+        </ButtonsContainer>
       </Container>
     </AppModal>
   );
