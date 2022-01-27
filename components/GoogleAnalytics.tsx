@@ -1,4 +1,4 @@
-import Script from "next/script";
+import Head from "next/head";
 
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
 const existsGaId = GA_ID !== "";
@@ -9,22 +9,23 @@ const GoogleAnalytics = () => {
   }
 
   return (
-    <>
-      <Script
-        defer
+    <Head>
+      <script
+        async
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="afterInteractive"
       />
-      <Script id="ga" defer strategy="afterInteractive">
-        {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', ${GA_ID});
-      `}
-      </Script>
-    </>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+      
+                gtag('config', '${GA_ID}');
+      `,
+        }}
+      />
+    </Head>
   );
 };
 
