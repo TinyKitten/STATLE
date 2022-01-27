@@ -40,7 +40,7 @@ const HistoryAndGuess = () => {
   const appReady = useInitGuess();
 
   useEffect(() => {
-    if (lastSeed !== seed) {
+    if (lastSeed && lastSeed !== seed) {
       return;
     }
 
