@@ -6,6 +6,7 @@ import Document, {
   NextScript,
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -38,6 +39,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <GoogleAnalytics />
           <meta
             name="description"
             content="JAPANESE TRAIN STATION GUESSING GAME"
