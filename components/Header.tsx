@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <Contianer>
       <AppName>STATLE(β)</AppName>
-      <AppMotto>JAPANESE TRAIN STATION GUESSNING GAME</AppMotto>
+      <AppMotto>JAPANESE TRAIN STATION GUESSING GAME</AppMotto>
     </Contianer>
   );
 };
