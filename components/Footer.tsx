@@ -49,6 +49,7 @@ const Footer = () => {
       <AuthorText>作ったのはね: TinyKitten</AuthorText>
       <AuthorLink href="https://tinykitten.me">ポートフォリオ</AuthorLink>
       <AuthorLink href="https://twitter.com/tinykitten8">Twitter</AuthorLink>
+      <AuthorLink href="https://blog.tinykitten.me/posts/statle/">開発秘話と言うにはおこがましい記事</AuthorLink>
     </Contianer>
   );
 };
