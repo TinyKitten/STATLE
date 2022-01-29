@@ -1,13 +1,10 @@
 import { useMemo } from "react";
+import * as seedgen from "../wasm/seedgen";
 
 const useSeed = () => {
   const SEED = useMemo(() => {
     const now = new Date();
-    const seed =
-      now.getFullYear() +
-      now.getMonth() +
-      now.getDate() +
-      parseInt(process.env.NEXT_PUBLIC_RANDOM_SEED || "0", 10);
+    const seed = seedgen.generate();
     const date = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
     return { seed, date };
   }, []);
