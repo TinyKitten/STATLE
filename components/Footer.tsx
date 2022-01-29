@@ -12,23 +12,31 @@ const AuthorText = styled.p`
   font-weight: bold;
 `;
 
-const AuthorLink = styled.a<{ withoutVerticalMargin?: boolean }>`
+const AuthorLinkBlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+`;
+
+const HyperLink = styled.a`
   color: ${({ theme }) => theme.textSub};
   margin: 0;
   text-align: center;
   font-weight: bold;
   display: block;
-  margin: ${({ withoutVerticalMargin }) =>
-    withoutVerticalMargin ? "0" : "4px 0"};
   text-decoration: underline;
 `;
 
-const LinkContainer = styled.p`
+const GitHubLink = styled(HyperLink)`
+  margin-top: 8px;
+`;
+
+const WordleLinkContainer = styled.p`
   color: ${({ theme }) => theme.textSub};
-  margin: 0;
   text-align: center;
   font-weight: bold;
-  margin: 8px 0;
+  margin: 0 0 8px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,19 +45,23 @@ const LinkContainer = styled.p`
 const Footer = () => {
   return (
     <Contianer>
-      <LinkContainer>
+      <WordleLinkContainer>
         元ネタ:&nbsp;
-        <AuthorLink
-          withoutVerticalMargin
-          href="https://www.powerlanguage.co.uk/wordle/"
-        >
+        <HyperLink href="https://www.powerlanguage.co.uk/wordle/">
           Wordle
-        </AuthorLink>
-      </LinkContainer>
+        </HyperLink>
+      </WordleLinkContainer>
       <AuthorText>作ったのはね: TinyKitten</AuthorText>
-      <AuthorLink href="https://tinykitten.me">ポートフォリオ</AuthorLink>
-      <AuthorLink href="https://twitter.com/tinykitten8">Twitter</AuthorLink>
-      <AuthorLink href="https://blog.tinykitten.me/posts/statle/">開発秘話と言うにはおこがましい記事</AuthorLink>
+      <AuthorLinkBlock>
+        <HyperLink href="https://tinykitten.me">ポートフォリオ</HyperLink>
+        <HyperLink href="https://twitter.com/tinykitten8">Twitter</HyperLink>
+        <HyperLink href="https://blog.tinykitten.me/posts/statle/">
+          開発秘話と言うにはおこがましい記事
+        </HyperLink>
+      </AuthorLinkBlock>
+      <GitHubLink href="https://github.com/TinyKitten/STATLE/">
+        開発に貢献する
+      </GitHubLink>
     </Contianer>
   );
 };
