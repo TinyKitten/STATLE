@@ -95,7 +95,8 @@ const HistoryAndGuess = () => {
     <Container>
       {Array.from({ length: MAX_ROUND })
         .map(
-          (_, index) => nameHistories[index] || Array.from({ length: MAX_CHAR })
+          (_, index) =>
+            nameHistories[index] || Array.from({ length: MAX_CHAR }).fill("")
         )
         .map((value, index) => (
           <GuessContainer key={index}>
