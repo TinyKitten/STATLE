@@ -46,7 +46,7 @@ const EnterColumn = styled(Column)`
   width: 65px;
   @media screen and (max-width: 480px) {
     width: 48px;
-    font-size: 0.5rem;
+    font-size: 0.75rem;
   }
 `;
 
