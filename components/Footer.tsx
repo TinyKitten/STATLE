@@ -17,6 +17,9 @@ const AuthorLinkBlock = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const HyperLink = styled.a`

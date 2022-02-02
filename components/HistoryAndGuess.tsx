@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
 import useAnswer from "../hooks/useAnswer";
 import useInitGuess from "../hooks/useInitGuess";
+import useKeyboardEvent from "../hooks/useKeyboardEvent";
 import useSeed from "../hooks/useSeed";
 import useShare from "../hooks/useShare";
 import guessAtom from "../state/guess";
 import Guess from "./Guess";
+import Keyboard from "./Keyboard";
 import LoseModal from "./LoseModal";
 import WonModal from "./WonModal";
 
@@ -19,6 +21,10 @@ const GuessContainer = styled.div`
   margin: 4px 0;
 `;
 
+const Divider = styled.div`
+  height: 24px;
+`;
+
 const HistoryAndGuess = () => {
   const [wonModalOpen, setWonModalOpen] = useState(false);
   const [loseModalOpen, setLoseModalOpen] = useState(false);
@@ -26,6 +32,8 @@ const HistoryAndGuess = () => {
   const { seed, date } = useSeed();
   const handleShare = useShare(date);
   const answer = useAnswer(seed);
+  const { handleKeyValue } = useKeyboardEvent();
+
   const [
     {
       correctSpotsHistories,
@@ -33,6 +41,7 @@ const HistoryAndGuess = () => {
       currentRound,
       lastSeed,
       nameHistories,
+      currentCharacters,
     },
     setGuess,
   ] = useAtom(guessAtom);
@@ -64,24 +73,6 @@ const HistoryAndGuess = () => {
     }
   }, [answer, correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
 
-  const handleGuessComplete = (chars: string[]) => {
-    setGuess((prev) => ({
-      ...prev,
-      currentRound: prev.currentRound + 1,
-      correctSpotsHistories: [
-        ...prev.correctSpotsHistories,
-        chars.map((c, i) => answer[i] === c),
-      ],
-      wrongSpotHistories: [
-        ...prev.wrongSpotHistories,
-        chars.map(
-          (c, i) => answer.indexOf(c) !== -1 && answer.indexOf(c) !== i
-        ),
-      ],
-      nameHistories: [...prev.nameHistories, chars],
-    }));
-  };
-
   const handleWonModalClose = () => setWonModalOpen(false);
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
@@ -90,6 +81,13 @@ const HistoryAndGuess = () => {
   if (!appReady) {
     return null;
   }
+
+  const filledCurrentCharacters = [
+    ...currentCharacters,
+    ...Array.from<string>({ length: MAX_CHAR - currentCharacters.length }).fill(
+      ""
+    ),
+  ];
 
   return (
     <Container>
@@ -101,16 +99,18 @@ const HistoryAndGuess = () => {
         .map((value, index) => (
           <GuessContainer key={index}>
             <Guess
-              value={value}
-              focused={currentRound - 1 === index}
+              value={
+                currentRound - 1 !== index ? value : filledCurrentCharacters
+              }
               correctFlags={correctSpotsHistories[index]}
               wrongFlags={wrongSpotHistories[index]}
               pastGuess={index < currentRound - 1}
-              onGuessComplete={handleGuessComplete}
               disabled={finished || currentRound - 1 < index}
             />
           </GuessContainer>
         ))}
+      <Divider />
+      <Keyboard onClick={handleKeyValue} />
       <WonModal
         isOpen={wonModalOpen}
         onRequestClose={handleWonModalClose}

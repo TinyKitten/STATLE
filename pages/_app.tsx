@@ -4,6 +4,7 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
+import useKeyboardEvent from "../hooks/useKeyboardEvent";
 import "../styles/modal.css";
 
 const GlobalStyle = createGlobalStyle`
@@ -33,6 +34,8 @@ Modal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { appearance, themeReady } = useAppearance();
+
+  useKeyboardEvent(true);
 
   if (!themeReady) {
     return null;

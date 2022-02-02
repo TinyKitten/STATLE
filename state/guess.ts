@@ -6,6 +6,7 @@ type AtomValues = {
   wrongSpotHistories: boolean[][];
   lastSeed: number | null;
   nameHistories: string[][];
+  currentCharacters: string[];
 };
 
 export const GUESS_ATOM_PERSIST_KEY = "guess";
@@ -16,6 +17,7 @@ export const INITIAL_GUESS_ATOM_VALUE: AtomValues = {
   wrongSpotHistories: [],
   lastSeed: null,
   nameHistories: [],
+  currentCharacters: [],
 };
 
 const guessAtom = atomWithStorage<AtomValues>(
