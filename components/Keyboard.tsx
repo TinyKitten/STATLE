@@ -35,11 +35,10 @@ const Column = styled.button`
   border-radius: 5px;
   margin: 2px;
   font-weight: bold;
-
+  font-size: 1rem;
   @media screen and (max-width: 480px) {
     width: 33px;
     height: 48px;
-    font-size: 0.5rem;
   }
 `;
 
