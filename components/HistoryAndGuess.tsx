@@ -80,7 +80,7 @@ const HistoryAndGuess = () => {
     () =>
       nameHistories
         .flatMap((arr) =>
-          arr.filter((char, idx) => answer.indexOf(char) === idx)
+          arr.filter((char, idx) => answer.lastIndexOf(char) === idx)
         )
         .filter((char, idx, self) => self.indexOf(char) === idx),
     [answer, nameHistories]
@@ -89,7 +89,7 @@ const HistoryAndGuess = () => {
     () =>
       nameHistories.flatMap((arr) =>
         arr
-          .filter((char, idx) => answer.indexOf(char) !== idx)
+          .filter((char, idx) => answer.lastIndexOf(char) !== idx)
           .filter((char) => answer.includes(char))
       ),
     [answer, nameHistories]
@@ -97,7 +97,7 @@ const HistoryAndGuess = () => {
   const notMatchedChars = useMemo(
     () =>
       nameHistories.flatMap((arr) =>
-        arr.filter((char) => answer.indexOf(char) === -1)
+        arr.filter((char) => answer.lastIndexOf(char) === -1)
       ),
     [answer, nameHistories]
   );
