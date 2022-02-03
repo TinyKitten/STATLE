@@ -1,8 +1,10 @@
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Modal from "react-modal";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import GoogleAnalytics from "../components/GoogleAnalytics";
 import { darkTheme, lightTheme } from "../constants/theme";
+import useAnalytics from "../hooks/useAnalytics";
 import useAppearance from "../hooks/useAppearance";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
 import "../styles/modal.css";
@@ -34,6 +36,20 @@ Modal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { appearance, themeReady } = useAppearance();
+  const router = useRouter();
+
+  const { recordPV } = useAnalytics();
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      recordPV();
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [recordPV, router.events]);
 
   useKeyboardEvent(true);
 
@@ -43,7 +59,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <GoogleAnalytics />
       <GlobalStyle />
       <ThemeProvider theme={appearance === "dark" ? darkTheme : lightTheme}>
         <Container>
