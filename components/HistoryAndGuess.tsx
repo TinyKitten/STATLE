@@ -61,6 +61,7 @@ const HistoryAndGuess = () => {
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
+        finished: true,
       }));
       return;
     }
@@ -69,6 +70,7 @@ const HistoryAndGuess = () => {
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
+        finished: true,
       }));
     }
   }, [answer, correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);

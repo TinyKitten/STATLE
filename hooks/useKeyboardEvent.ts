@@ -8,7 +8,7 @@ import useAnswer from "./useAnswer";
 import useSeed from "./useSeed";
 
 const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
-  const [{ currentCharacters }, setGuess] = useAtom(guessAtom);
+  const [{ currentCharacters, finished }, setGuess] = useAtom(guessAtom);
 
   const { seed } = useSeed();
   const answer = useAnswer(seed);
@@ -48,6 +48,10 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
 
   const handleKeyValue = useCallback(
     (key: string) => {
+      if (finished) {
+        return;
+      }
+
       switch (key) {
         case "Enter":
         case "ENTER": {
@@ -80,7 +84,7 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
         }
       }
     },
-    [currentCharacters, handleEnterPress, setGuess]
+    [currentCharacters, finished, handleEnterPress, setGuess]
   );
 
   const handleKeyUp = useCallback(
@@ -98,6 +102,12 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
       };
     }
   }, [handleKeyUp, shouldAddEventListener]);
+
+  useEffect(() => {
+    if (finished) {
+      document.removeEventListener("keyup", handleKeyUp);
+    }
+  }, [finished, handleKeyUp]);
 
   return {
     handleKeyValue,
