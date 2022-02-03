@@ -19,6 +19,7 @@ const AuthorLinkBlock = styled.div`
   gap: 16px;
   @media screen and (max-width: 480px) {
     flex-direction: column;
+    gap: 0;
   }
 `;
 
