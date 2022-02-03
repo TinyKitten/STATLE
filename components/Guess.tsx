@@ -30,24 +30,17 @@ type Props = {
   pastGuess: boolean;
   correctFlags: boolean[];
   wrongFlags: boolean[];
-  disabled: boolean;
   value: string[];
 };
 
-const Guess = ({
-  pastGuess,
-  correctFlags,
-  wrongFlags,
-  disabled,
-  value,
-}: Props) => {
+const Guess = ({ pastGuess, correctFlags, wrongFlags, value }: Props) => {
   const { appearance } = useAppearance();
 
   const themeContext = useContext(ThemeContext);
 
   const getCharInputBGColor = useCallback(
     (index: number) => {
-      if (!pastGuess && !disabled) {
+      if (!pastGuess) {
         return "transparent";
       }
 
@@ -58,13 +51,9 @@ const Guess = ({
         return "#d7b620";
       }
 
-      if (disabled) {
-        return themeContext.edge;
-      }
-
       return themeContext.edge;
     },
-    [correctFlags, disabled, pastGuess, themeContext.edge, wrongFlags]
+    [correctFlags, pastGuess, themeContext.edge, wrongFlags]
   );
 
   return (

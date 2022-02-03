@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { MAX_CHAR, MAX_ROUND } from "../constants/threshold";
 import useAnswer from "../hooks/useAnswer";
@@ -76,7 +76,31 @@ const HistoryAndGuess = () => {
   const handleWonModalClose = () => setWonModalOpen(false);
   const handleLoseModalClose = () => setLoseModalOpen(false);
 
-  const finished = lastSeed === seed;
+  const correctPositionChars = useMemo(
+    () =>
+      nameHistories
+        .flatMap((arr) =>
+          arr.filter((char, idx) => answer.indexOf(char) === idx)
+        )
+        .filter((char, idx, self) => self.indexOf(char) === idx),
+    [answer, nameHistories]
+  );
+  const wrongPositionChars = useMemo(
+    () =>
+      nameHistories.flatMap((arr) =>
+        arr
+          .filter((char, idx) => answer.indexOf(char) !== idx)
+          .filter((char) => answer.includes(char))
+      ),
+    [answer, nameHistories]
+  );
+  const notMatchedChars = useMemo(
+    () =>
+      nameHistories.flatMap((arr) =>
+        arr.filter((char) => answer.indexOf(char) === -1)
+      ),
+    [answer, nameHistories]
+  );
 
   if (!appReady) {
     return null;
@@ -105,12 +129,16 @@ const HistoryAndGuess = () => {
               correctFlags={correctSpotsHistories[index]}
               wrongFlags={wrongSpotHistories[index]}
               pastGuess={index < currentRound - 1}
-              disabled={finished || currentRound - 1 < index}
             />
           </GuessContainer>
         ))}
       <Divider />
-      <Keyboard onClick={handleKeyValue} />
+      <Keyboard
+        correctChars={correctPositionChars}
+        wrongChars={wrongPositionChars}
+        notMatchedChars={notMatchedChars}
+        onClick={handleKeyValue}
+      />
       <WonModal
         isOpen={wonModalOpen}
         onRequestClose={handleWonModalClose}

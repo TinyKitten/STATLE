@@ -20,7 +20,7 @@ export const lightTheme: AppPalette = {
 
 export const darkTheme: AppPalette = {
   primary: "#008ffe",
-  background: "#212121",
+  background: "#000",
   backgroundSub: "#303030",
   text: "#fcfcfc",
   textSub: "#aaa",

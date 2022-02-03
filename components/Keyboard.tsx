@@ -1,8 +1,15 @@
-import { MouseEvent } from "react";
-import styled from "styled-components";
+import { MouseEvent, useCallback, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
+import {
+  CORRECT_POSITION_COLOR,
+  WRONG_POSITION_COLOR,
+} from "../constants/color";
 
 type Props = {
   onClick: (value: string) => void;
+  correctChars: string[];
+  wrongChars: string[];
+  notMatchedChars: string[];
 };
 
 const KEYS: string[][] = [
@@ -21,7 +28,7 @@ const Container = styled.div`
 const Row = styled.div`
   display: flex;
 `;
-const Column = styled.button`
+const Column = styled.button<{ backgroundColor?: string }>`
   appearance: none;
   cursor: pointer;
   border: none;
@@ -31,7 +38,8 @@ const Column = styled.button`
   height: 58px;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.edge};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.edge};
   border-radius: 5px;
   margin: 2px;
   font-weight: bold;
@@ -50,13 +58,53 @@ const EnterColumn = styled(Column)`
   }
 `;
 
-const Keyboard = ({ onClick }: Props) => {
+const Keyboard = ({
+  onClick,
+  correctChars,
+  wrongChars,
+  notMatchedChars,
+}: Props) => {
   const handleEnterClick = () => onClick("ENTER");
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const { value: v, dataset } = e.currentTarget;
     const { key } = dataset as { key: string };
     onClick(key);
   };
+
+  const themeContext = useContext(ThemeContext);
+
+  const getIsCorrectChar = useCallback(
+    (char: string) => correctChars.includes(char),
+    [correctChars]
+  );
+  const getIsWrongChar = useCallback(
+    (char: string) => wrongChars.includes(char),
+    [wrongChars]
+  );
+  const getIsNotMatchedChar = useCallback(
+    (char: string) => notMatchedChars.includes(char),
+    [notMatchedChars]
+  );
+
+  const getBGColor = useCallback(
+    (char: string): string | undefined => {
+      if (getIsCorrectChar(char)) {
+        return CORRECT_POSITION_COLOR;
+      }
+      if (getIsWrongChar(char)) {
+        return WRONG_POSITION_COLOR;
+      }
+      if (getIsNotMatchedChar(char)) {
+        return themeContext.backgroundSub;
+      }
+    },
+    [
+      getIsCorrectChar,
+      getIsNotMatchedChar,
+      getIsWrongChar,
+      themeContext.backgroundSub,
+    ]
+  );
 
   return (
     <Container>
@@ -68,7 +116,12 @@ const Keyboard = ({ onClick }: Props) => {
                 {key}
               </EnterColumn>
             ) : (
-              <Column data-key={key} onClick={handleClick} key={key}>
+              <Column
+                backgroundColor={getBGColor(key)}
+                data-key={key}
+                onClick={handleClick}
+                key={key}
+              >
                 {key}
               </Column>
             )
