@@ -23,6 +23,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  user-select: none;
 `;
 
 const Row = styled.div`
