@@ -75,6 +75,9 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
 
           const notEmptyArr = currentCharacters.filter((char) => char !== "");
 
+          if (!/[a-zA-Z]/.test(key)) {
+            return;
+          }
           if (notEmptyArr.length < MAX_CHAR) {
             setGuess((prev) => ({
               ...prev,
