@@ -10,16 +10,21 @@ const CharacterContainer = styled.div`
   align-items: center;
 `;
 
-const Char = styled.div<{ bgColor: string }>`
+const Char = styled.div<{
+  txtColor: string;
+  bgColor: string;
+  borderColor: string;
+}>`
   width: 64px;
   height: 64px;
   font-size: 3rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme, txtColor }) => txtColor || theme.text};
   text-align: center;
   appearance: none;
   background: ${({ bgColor }) => bgColor || "transparent"};
   margin: 0 2px;
-  border: ${({ theme }) => `2px solid ${theme.edge}`};
+  border: ${({ theme, borderColor }) =>
+    `2px solid ${borderColor || theme.edge}`};
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -51,7 +56,46 @@ const Guess = ({ pastGuess, correctFlags, wrongFlags, value }: Props) => {
         return "#d7b620";
       }
 
-      return themeContext.edge;
+      return "#555";
+    },
+    [correctFlags, pastGuess, wrongFlags]
+  );
+
+  const getCharInputFontColor = useCallback(
+    (index: number) => {
+      if (
+        pastGuess ||
+        correctFlags?.find((_, i) => i === index) ||
+        wrongFlags?.find((_, i) => i === index)
+      ) {
+        return themeContext.invertedText;
+      }
+
+      return themeContext.text;
+    },
+    [
+      correctFlags,
+      pastGuess,
+      themeContext.invertedText,
+      themeContext.text,
+      wrongFlags,
+    ]
+  );
+
+  const getCharInputBorderColor = useCallback(
+    (index: number) => {
+      if (!pastGuess) {
+        return themeContext.edge;
+      }
+
+      if (correctFlags?.find((_, i) => i === index)) {
+        return "#66ac51";
+      }
+      if (wrongFlags?.find((_, i) => i === index)) {
+        return "#d7b620";
+      }
+
+      return "#555";
     },
     [correctFlags, pastGuess, themeContext.edge, wrongFlags]
   );
@@ -59,7 +103,12 @@ const Guess = ({ pastGuess, correctFlags, wrongFlags, value }: Props) => {
   return (
     <CharacterContainer>
       {value.map((v, index) => (
-        <Char key={index} bgColor={(() => getCharInputBGColor(index))()}>
+        <Char
+          key={index}
+          txtColor={getCharInputFontColor(index)}
+          bgColor={getCharInputBGColor(index)}
+          borderColor={getCharInputBorderColor(index)}
+        >
           {v}
         </Char>
       ))}

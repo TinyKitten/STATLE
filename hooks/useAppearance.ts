@@ -11,15 +11,11 @@ const useAppearance = (): {
 } => {
   const [theme, setTheme] = useAtom(themeAtom);
   const setMode = (mode: AppearanceMode) => {
-    typeof window !== "undefined" && window.localStorage.setItem("theme", mode);
     setTheme((prev) => ({
       ...prev,
       appearance: mode,
     }));
   };
-
-  const localTheme =
-    typeof window !== "undefined" && window.localStorage.getItem("theme");
 
   const toggleTheme = () => {
     if (theme.appearance === "light") {
@@ -30,22 +26,20 @@ const useAppearance = (): {
   };
 
   useEffect(() => {
-    if (localTheme) {
-      setTheme((prev) => ({
-        ...prev,
-        appearance: localTheme as AppearanceMode,
-      }));
-    } else if (
-      typeof window !== "undefined" &&
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (
       window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches &&
-      !localTheme
+      window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       setTheme((prev) => ({ ...prev, appearance: "dark" }));
+    } else {
+      setTheme((prev) => ({ ...prev, appearance: "light" }));
     }
 
     setTheme((prev) => ({ ...prev, ready: true }));
-  }, [localTheme, setTheme]);
+  }, [setTheme]);
 
   return {
     appearance: theme.appearance,

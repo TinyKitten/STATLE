@@ -38,19 +38,18 @@ const BaseButton = styled.div`
   font-size: 1rem;
   padding: 12px 0;
   width: 100%;
-  border-radius: 4px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   font-weight: bold;
 `;
 
 const ShareButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.invertedText};
 `;
 
 const CloseButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.backgroundSub};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.invertedText};
 `;
 
 const WonModal = ({ isOpen, onShareClick, onRequestClose }: Props) => {

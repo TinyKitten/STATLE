@@ -3,6 +3,7 @@ export type AppPalette = {
   background: string;
   backgroundSub: string;
   text: string;
+  invertedText: string;
   textSub: string;
   edge: string;
   error: string;
@@ -11,9 +12,10 @@ export type AppPalette = {
 export const lightTheme: AppPalette = {
   primary: "#008ffe",
   background: "#fafafa",
-  backgroundSub: "#f5f5f5",
+  backgroundSub: "#555",
   text: "#333",
   textSub: "#555",
+  invertedText: "#fcfcfc",
   edge: "#ccc",
   error: "#FF3232",
 };
@@ -24,6 +26,7 @@ export const darkTheme: AppPalette = {
   backgroundSub: "#303030",
   text: "#fcfcfc",
   textSub: "#aaa",
+  invertedText: "#fcfcfc",
   edge: "#666",
   error: "#FF3232",
 };

@@ -29,12 +29,12 @@ const Container = styled.div`
 const Row = styled.div`
   display: flex;
 `;
-const Column = styled.button<{ backgroundColor?: string }>`
+const Column = styled.button<{ fontColor?: string; backgroundColor?: string }>`
   appearance: none;
   cursor: pointer;
   border: none;
   display: flex;
-  color: white;
+  color: ${({ theme, fontColor }) => fontColor || theme.text};
   width: 43px;
   height: 58px;
   justify-content: center;
@@ -107,6 +107,26 @@ const Keyboard = ({
     ]
   );
 
+  const getFontColor = useCallback(
+    (char: string) => {
+      if (
+        getIsCorrectChar(char) ||
+        getIsWrongChar(char) ||
+        getIsNotMatchedChar(char)
+      ) {
+        return themeContext.invertedText;
+      }
+      return themeContext.text;
+    },
+    [
+      getIsCorrectChar,
+      getIsNotMatchedChar,
+      getIsWrongChar,
+      themeContext.invertedText,
+      themeContext.text,
+    ]
+  );
+
   return (
     <Container>
       {KEYS.map((row) => (
@@ -119,6 +139,7 @@ const Keyboard = ({
             ) : (
               <Column
                 backgroundColor={getBGColor(key)}
+                fontColor={getFontColor(key)}
                 data-key={key}
                 onClick={handleClick}
                 key={key}
