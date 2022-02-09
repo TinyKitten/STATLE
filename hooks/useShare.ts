@@ -1,8 +1,16 @@
 import { useAtom } from "jotai";
-import { CORRECT_EMOJI, OTHER_EMOJI, WRONG_EMOJI } from "../constants/share";
+import {
+  CORRECT_EMOJI,
+  OTHER_EMOJI_DARK,
+  OTHER_EMOJI_LIGHT,
+  WRONG_EMOJI,
+} from "../constants/share";
 import guessAtom from "../state/guess";
+import themeAtom from "../state/theme";
 
 const useShare = (date: string) => {
+  const [{ appearance }] = useAtom(themeAtom);
+
   const [
     { currentRound, nameHistories, correctSpotsHistories, wrongSpotHistories },
   ] = useAtom(guessAtom);
@@ -11,8 +19,8 @@ const useShare = (date: string) => {
     nameHistories: string[][],
     correctSpotsHistories: boolean[][],
     wrongSpotsHistories: boolean[][]
-  ) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) =>
-    nameHistories
+  ) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) => {
+    return nameHistories
       .map((pairs, i) =>
         pairs
           .map((_, j) => {
@@ -21,12 +29,15 @@ const useShare = (date: string) => {
             } else if (wrongSpotsHistories[i][j]) {
               return WRONG_EMOJI;
             } else {
-              return OTHER_EMOJI;
+              return appearance === "dark"
+                ? OTHER_EMOJI_DARK
+                : OTHER_EMOJI_LIGHT;
             }
           })
           .join("")
       )
       .join("\n");
+  };
 
   const share = () => {
     const shareText = `${`STATLE ${date} ${
