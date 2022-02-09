@@ -51,12 +51,12 @@ const BaseButton = styled.div`
 
 const ShareButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.invertedText};
 `;
 
 const CloseButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.backgroundSub};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.invertedText};
 `;
 
 const LoseModal = ({ isOpen, onRequestClose, onShareClick }: Props) => {
