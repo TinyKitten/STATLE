@@ -121,7 +121,7 @@ const Guess = ({ pastGuess, correctFlags, wrongFlags, value }: Props) => {
         rtl={false}
         pauseOnFocusLoss={false}
         draggable={false}
-        pauseOnHover
+        pauseOnHover={false}
         theme={appearance === "dark" ? "dark" : "light"}
       />
     </CharacterContainer>

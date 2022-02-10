@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { STATIONS } from "../constants/stations";
 import { MAX_CHAR } from "../constants/threshold";
@@ -12,6 +12,8 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
 
   const { seed } = useSeed();
   const answer = useAnswer(seed);
+
+  const [toastOpened, setToastOpened] = useState(false);
 
   const handleGuessComplete = useCallback(
     (chars: string[]) => {
@@ -39,12 +41,17 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
     const joined = currentCharacters.join("");
     if (joined.length === MAX_CHAR) {
       if (STATIONS.findIndex((s) => s === joined) === -1) {
-        toast("駅名リストにないよ");
+        if (!toastOpened) {
+          toast("駅名リストにないよ", {
+            onOpen: () => setToastOpened(true),
+            onClose: () => setToastOpened(false),
+          });
+        }
         return;
       }
       handleGuessComplete(currentCharacters);
     }
-  }, [currentCharacters, handleGuessComplete]);
+  }, [currentCharacters, handleGuessComplete, toastOpened]);
 
   const handleKeyValue = useCallback(
     (key: string) => {
