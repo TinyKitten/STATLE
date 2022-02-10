@@ -60,6 +60,10 @@ const useShare = (date: string) => {
         )}&url=${encodeURI("https://statle.tinykitten.me")}&related=TinyKitten`
       );
     }
+
+    if (typeof window !== "undefined") {
+      window.dataLayer.push({ event: "user_share" });
+    }
   };
 
   return share;
