@@ -57,6 +57,10 @@ const HistoryAndGuess = () => {
       correctSpotsHistories[currentRound - 2]?.filter((flag) => flag).length ===
       MAX_CHAR
     ) {
+      if (typeof window !== "undefined") {
+        window.dataLayer.push({ event: "result_won" });
+      }
+
       setWonModalOpen(true);
       setGuess((prev) => ({
         ...prev,
@@ -66,6 +70,9 @@ const HistoryAndGuess = () => {
       return;
     }
     if (currentRound > MAX_ROUND) {
+      if (typeof window !== "undefined") {
+        window.dataLayer.push({ event: "result_lose" });
+      }
       setLoseModalOpen(true);
       setGuess((prev) => ({
         ...prev,
