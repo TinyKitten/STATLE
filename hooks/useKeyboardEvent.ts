@@ -17,19 +17,30 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
 
   const handleGuessComplete = useCallback(
     (chars: string[]) => {
+      const correctSpots = chars.map((c, i) => answer[i] === c);
+
+      const wrongSpots = chars.reduce<boolean[]>((acc, cur, idx, arr) => {
+        if (
+          arr.filter((char) => char === cur).length >= 1 &&
+          answer.split("").indexOf(cur) !== -1 &&
+          answer.indexOf(cur) !== idx
+        ) {
+          const maxCount = arr.filter(
+            (c, i) => c === cur && answer[i] !== cur
+          ).length;
+          const correctSpotsCount = correctSpots.filter((flag) => flag).length;
+          const matchedIndex = arr.findIndex((c) => c === cur);
+          acc[idx] = matchedIndex === idx && maxCount !== correctSpotsCount;
+          return acc;
+        }
+        return acc;
+      }, Array.from<boolean>({ length: 5 }).fill(false));
+
       setGuess((prev) => ({
         ...prev,
         currentRound: prev.currentRound + 1,
-        correctSpotsHistories: [
-          ...prev.correctSpotsHistories,
-          chars.map((c, i) => answer[i] === c),
-        ],
-        wrongSpotHistories: [
-          ...prev.wrongSpotHistories,
-          chars.map(
-            (c, i) => answer.indexOf(c) !== -1 && answer.indexOf(c) !== i
-          ),
-        ],
+        correctSpotsHistories: [...prev.correctSpotsHistories, correctSpots],
+        wrongSpotHistories: [...prev.wrongSpotHistories, wrongSpots],
         nameHistories: [...prev.nameHistories, chars],
         currentCharacters: [],
       }));
