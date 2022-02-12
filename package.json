@@ -5,8 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ./ --ext .ts,.tsx && prettier --check ./",
-    "fix": "eslint ./ --ext .ts,.tsx --fix && prettier --write ./"
+    "lint": "eslint ./ --ext .ts,.tsx && prettier --check ./"
   },
   "dependencies": {
     "ga-lite": "^2.1.4",
