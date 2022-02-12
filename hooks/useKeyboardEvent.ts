@@ -83,10 +83,6 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
           break;
         }
         default: {
-          if (key.length !== 1) {
-            break;
-          }
-
           const notEmptyArr = currentCharacters.filter((char) => char !== "");
 
           if (!/[a-zA-Z]/.test(key)) {
