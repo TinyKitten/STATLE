@@ -25,12 +25,8 @@ const useKeyboardEvent = (shouldAddEventListener?: boolean) => {
           answer.split("").indexOf(cur) !== -1 &&
           answer.indexOf(cur) !== idx
         ) {
-          const maxCount = arr.filter(
-            (c, i) => c === cur && answer[i] !== cur
-          ).length;
-          const correctSpotsCount = correctSpots.filter((flag) => flag).length;
-          const matchedIndex = arr.findIndex((c) => c === cur);
-          acc[idx] = matchedIndex === idx && maxCount !== correctSpotsCount;
+          const matchedIndices = arr.map((c) => c === cur);
+          acc[idx] = matchedIndices[idx];
           return acc;
         }
         return acc;
