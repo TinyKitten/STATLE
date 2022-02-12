@@ -5,5 +5,5 @@
     "semi": "error",
     "no-console": "error"
   },
-  "ignorePatterns": ["node_modules", ".next"]
+  "ignorePatterns": ["node_modules", ".next", "wasm"]
 }
