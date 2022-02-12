@@ -15,6 +15,8 @@ const useShare = (date: string) => {
     { currentRound, nameHistories, correctSpotsHistories, wrongSpotHistories },
   ] = useAtom(guessAtom);
 
+  const isWindows = window.navigator.userAgent.toLowerCase().includes("win");
+
   const generateShareResult: (
     nameHistories: string[][],
     correctSpotsHistories: boolean[][],
@@ -47,8 +49,13 @@ const useShare = (date: string) => {
       correctSpotsHistories,
       wrongSpotHistories
     )}\n`;
-    // ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
-    if (window.navigator.share) {
+    /**
+     * ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
+     *
+     * Windows だとなぜか window.navigator が定義されているらしいが、
+     * 弾けばええやろみたいな気分で UA で弾いた
+     */
+    if (!isWindows && window.navigator.share) {
       window.navigator.share({
         text: shareText,
         url: "https://statle.tinykitten.me",
