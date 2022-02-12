@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
-* @returns {number}
-*/
+ * @returns {number}
+ */
 export function generate(): number;
