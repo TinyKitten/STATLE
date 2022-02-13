@@ -5,6 +5,7 @@ import GoogleAnalytics from "../components/GoogleAnalytics";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
+import usePageView from "../hooks/usePageView";
 import "../styles/modal.css";
 
 const GlobalStyle = createGlobalStyle`
@@ -34,6 +35,7 @@ Modal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { appearance, themeReady } = useAppearance();
+  usePageView();
 
   useKeyboardEvent(true);
 
