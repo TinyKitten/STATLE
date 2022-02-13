@@ -1,7 +1,7 @@
 type GAEVentBase = {
   action: string;
   category: "user_engagement";
-  label: string;
+  label: "event";
   value?: string;
 };
 

@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import Modal from "react-modal";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import GoogleAnalytics from "../components/GoogleAnalytics";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
@@ -45,7 +44,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <GoogleAnalytics />
       <GlobalStyle />
       <ThemeProvider theme={appearance === "dark" ? darkTheme : lightTheme}>
         <Container>

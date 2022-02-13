@@ -5,6 +5,7 @@ import {
   OTHER_EMOJI_LIGHT,
   WRONG_EMOJI,
 } from "../constants/share";
+import { event } from "../lib/gtag";
 import guessAtom from "../state/guess";
 import themeAtom from "../state/theme";
 
@@ -68,9 +69,11 @@ const useShare = (date: string) => {
       );
     }
 
-    if (typeof window !== "undefined") {
-      window.dataLayer.push({ event: "user_share" });
-    }
+    event({
+      action: "user_share",
+      category: "user_engagement",
+      label: "event",
+    });
   };
 
   return share;

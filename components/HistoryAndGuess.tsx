@@ -7,6 +7,7 @@ import useInitGuess from "../hooks/useInitGuess";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
 import useSeed from "../hooks/useSeed";
 import useShare from "../hooks/useShare";
+import { event } from "../lib/gtag";
 import guessAtom from "../state/guess";
 import Guess from "./Guess";
 import Keyboard from "./Keyboard";
@@ -57,9 +58,11 @@ const HistoryAndGuess = () => {
       correctSpotsHistories[currentRound - 2]?.filter((flag) => flag).length ===
       MAX_CHAR
     ) {
-      if (typeof window !== "undefined") {
-        window.dataLayer.push({ event: "result_won" });
-      }
+      event({
+        action: "result_won",
+        category: "user_engagement",
+        label: "event",
+      });
 
       setWonModalOpen(true);
       setGuess((prev) => ({
@@ -70,9 +73,12 @@ const HistoryAndGuess = () => {
       return;
     }
     if (currentRound > MAX_ROUND) {
-      if (typeof window !== "undefined") {
-        window.dataLayer.push({ event: "result_lose" });
-      }
+      event({
+        action: "result_lose",
+        category: "user_engagement",
+        label: "event",
+      });
+
       setLoseModalOpen(true);
       setGuess((prev) => ({
         ...prev,
