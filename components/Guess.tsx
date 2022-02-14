@@ -1,8 +1,7 @@
-import { useCallback, useContext } from "react";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import useAppearance from "../hooks/useAppearance";
+import useColoring from "../hooks/useColoring";
 
 const CharacterContainer = styled.div`
   display: flex;
@@ -40,65 +39,11 @@ type Props = {
 
 const Guess = ({ pastGuess, correctFlags, wrongFlags, value }: Props) => {
   const { appearance } = useAppearance();
-
-  const themeContext = useContext(ThemeContext);
-
-  const getCharInputBGColor = useCallback(
-    (index: number) => {
-      if (!pastGuess) {
-        return "transparent";
-      }
-
-      if (correctFlags?.find((_, i) => i === index)) {
-        return "#66ac51";
-      }
-      if (wrongFlags?.find((_, i) => i === index)) {
-        return "#d7b620";
-      }
-
-      return "#555";
-    },
-    [correctFlags, pastGuess, wrongFlags]
-  );
-
-  const getCharInputFontColor = useCallback(
-    (index: number) => {
-      if (
-        pastGuess ||
-        correctFlags?.find((_, i) => i === index) ||
-        wrongFlags?.find((_, i) => i === index)
-      ) {
-        return themeContext.invertedText;
-      }
-
-      return themeContext.text;
-    },
-    [
-      correctFlags,
-      pastGuess,
-      themeContext.invertedText,
-      themeContext.text,
-      wrongFlags,
-    ]
-  );
-
-  const getCharInputBorderColor = useCallback(
-    (index: number) => {
-      if (!pastGuess) {
-        return themeContext.edge;
-      }
-
-      if (correctFlags?.find((_, i) => i === index)) {
-        return "#66ac51";
-      }
-      if (wrongFlags?.find((_, i) => i === index)) {
-        return "#d7b620";
-      }
-
-      return "#555";
-    },
-    [correctFlags, pastGuess, themeContext.edge, wrongFlags]
-  );
+  const {
+    getCharInputFontColor,
+    getCharInputBGColor,
+    getCharInputBorderColor,
+  } = useColoring({ pastGuess, correctFlags, wrongFlags });
 
   return (
     <CharacterContainer>

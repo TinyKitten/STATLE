@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import Modal from "react-modal";
+import "react-toastify/dist/ReactToastify.css";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useAppearance from "../hooks/useAppearance";
