@@ -4,7 +4,7 @@ type AtomValues = {
   currentRound: number;
   correctSpotsHistories: boolean[][];
   wrongSpotHistories: boolean[][];
-  lastDate: Date | null;
+  lastSeed: number | null;
   nameHistories: string[][];
   currentCharacters: string[];
   finished: boolean;
@@ -16,7 +16,7 @@ export const INITIAL_GUESS_ATOM_VALUE: AtomValues = {
   currentRound: 1,
   correctSpotsHistories: [],
   wrongSpotHistories: [],
-  lastDate: null,
+  lastSeed: null,
   nameHistories: [],
   currentCharacters: [],
   finished: false,

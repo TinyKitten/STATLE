@@ -3,12 +3,10 @@ import * as seedgen from "../wasm/seedgen";
 
 const useSeed = () => {
   const SEED = useMemo(() => {
-    const rawDate = new Date();
+    const now = new Date();
     const seed = seedgen.generate();
-    const date = `${rawDate.getFullYear()}/${
-      rawDate.getMonth() + 1
-    }/${rawDate.getDate()}`;
-    return { seed, date, rawDate };
+    const date = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
+    return { seed, date };
   }, []);
 
   return SEED;
