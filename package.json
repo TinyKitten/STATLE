@@ -6,9 +6,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./ --ext .ts,.tsx && prettier --check ./",
-    "fix": "eslint ./ --ext .ts,.tsx --fix && prettier --write ./"
+    "fix": "eslint ./ --ext .ts,.tsx --fix && prettier --write ./",
+    "test": "jest --watch"
   },
   "dependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "ga-lite": "^2.1.4",
     "jotai": "^1.5.3",
     "next": "^12.0.10",
@@ -19,6 +21,9 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.4.0",
     "@types/node": "17.0.10",
     "@types/react": "17.0.38",
     "@types/react-modal": "^3.13.1",
@@ -27,6 +32,7 @@
     "eslint-config-next": "12.0.8",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.5.1",
     "prettier": "^2.5.1",
     "typescript": "4.5.5"
   }

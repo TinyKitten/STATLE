@@ -6,7 +6,7 @@ import useSeed from "./useSeed";
 const useAnswer = (seed?: number) => {
   const { seed: defaultSeed } = useSeed();
   const ANSWER = useMemo(() => {
-    const s = seed || defaultSeed;
+    const s = seed ?? defaultSeed;
     const rand = new Random(s);
     const randomInt = rand.nextInt(0, STATIONS.length - 1);
 
