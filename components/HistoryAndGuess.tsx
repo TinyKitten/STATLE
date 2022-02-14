@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
 import { useAtom } from "jotai";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
@@ -13,6 +15,8 @@ import Guess from "./Guess";
 import Keyboard from "./Keyboard";
 import LoseModal from "./LoseModal";
 import WonModal from "./WonModal";
+
+dayjs.extend(isToday);
 
 const Container = styled.div`
   margin-top: 32px;
@@ -30,7 +34,7 @@ const HistoryAndGuess = () => {
   const [wonModalOpen, setWonModalOpen] = useState(false);
   const [loseModalOpen, setLoseModalOpen] = useState(false);
 
-  const { seed, date } = useSeed();
+  const { seed, date, rawDate } = useSeed();
   const handleShare = useShare(date);
   const answer = useAnswer(seed);
   const { handleKeyValue } = useKeyboardEvent();
@@ -40,7 +44,7 @@ const HistoryAndGuess = () => {
       correctSpotsHistories,
       wrongSpotHistories,
       currentRound,
-      lastSeed,
+      lastDate,
       nameHistories,
       currentCharacters,
     },
@@ -50,7 +54,7 @@ const HistoryAndGuess = () => {
   const appReady = useInitGuess();
 
   useEffect(() => {
-    if (lastSeed && lastSeed !== seed) {
+    if (lastDate && dayjs(lastDate).isToday()) {
       return;
     }
 
@@ -67,7 +71,7 @@ const HistoryAndGuess = () => {
       setWonModalOpen(true);
       setGuess((prev) => ({
         ...prev,
-        lastSeed: seed,
+        lastDate: rawDate,
         finished: true,
       }));
       return;
@@ -82,11 +86,11 @@ const HistoryAndGuess = () => {
       setLoseModalOpen(true);
       setGuess((prev) => ({
         ...prev,
-        lastSeed: seed,
+        lastDate: rawDate,
         finished: true,
       }));
     }
-  }, [answer, correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
+  }, [correctSpotsHistories, currentRound, lastDate, rawDate, setGuess]);
 
   const handleWonModalClose = () => setWonModalOpen(false);
   const handleLoseModalClose = () => setLoseModalOpen(false);
