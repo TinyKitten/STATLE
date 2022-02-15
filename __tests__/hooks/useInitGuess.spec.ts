@@ -12,7 +12,7 @@ jest.mock("../../state/guess", () => jest.fn());
 describe("useInitGuess", () => {
   it("readyがtrueになってほしい", () => {
     (useAtom as jest.Mock).mockImplementation(() => [{ lastSeed: 0 }, jest.fn]);
-    const result = renderHook(() => useInitGuess()).result;
+    const { result } = renderHook(() => useInitGuess());
     expect(result.current).toBeTruthy();
   });
   it("lastSeedとseedが異なるのでsetGuessが呼ばれてほしい", () => {
