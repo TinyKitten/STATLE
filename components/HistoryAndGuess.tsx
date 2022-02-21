@@ -27,11 +27,11 @@ const Divider = styled.div`
 `;
 
 const HistoryAndGuess = () => {
-  const [wonModalOpen, setWonModalOpen] = useState(false);
-  const [loseModalOpen, setLoseModalOpen] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [gameLose, setGameLose] = useState(false);
 
   const { seed, date } = useSeed();
-  const handleShare = useShare(date);
+  const handleShare = useShare(date, gameWon);
   const answer = useAnswer(seed);
   const { handleKeyValue } = useKeyboardEvent();
 
@@ -64,7 +64,7 @@ const HistoryAndGuess = () => {
         label: "event",
       });
 
-      setWonModalOpen(true);
+      setGameWon(true);
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
@@ -79,7 +79,7 @@ const HistoryAndGuess = () => {
         label: "event",
       });
 
-      setLoseModalOpen(true);
+      setGameLose(true);
       setGuess((prev) => ({
         ...prev,
         lastSeed: seed,
@@ -88,8 +88,8 @@ const HistoryAndGuess = () => {
     }
   }, [answer, correctSpotsHistories, currentRound, lastSeed, seed, setGuess]);
 
-  const handleWonModalClose = () => setWonModalOpen(false);
-  const handleLoseModalClose = () => setLoseModalOpen(false);
+  const handleWonModalClose = () => setGameWon(false);
+  const handleLoseModalClose = () => setGameLose(false);
 
   const correctPositionChars = useMemo(
     () =>
@@ -155,12 +155,12 @@ const HistoryAndGuess = () => {
         onClick={handleKeyValue}
       />
       <WonModal
-        isOpen={wonModalOpen}
+        isOpen={gameWon}
         onRequestClose={handleWonModalClose}
         onShareClick={handleShare}
       />
       <LoseModal
-        isOpen={loseModalOpen}
+        isOpen={gameLose}
         onRequestClose={handleLoseModalClose}
         onShareClick={handleShare}
       />

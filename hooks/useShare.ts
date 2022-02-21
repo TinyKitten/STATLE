@@ -9,7 +9,7 @@ import { event } from "../lib/gtag";
 import guessAtom from "../state/guess";
 import themeAtom from "../state/theme";
 
-const useShare = (date: string) => {
+const useShare = (date: string, won: boolean) => {
   const [{ appearance }] = useAtom(themeAtom);
 
   const [
@@ -21,7 +21,8 @@ const useShare = (date: string) => {
   const generateShareResult: (
     nameHistories: string[][],
     correctSpotsHistories: boolean[][],
-    wrongSpotsHistories: boolean[][]
+    wrongSpotsHistories: boolean[][],
+    won: boolean
   ) => string = (nameHistories, correctSpotsHistories, wrongSpotsHistories) => {
     return nameHistories
       .map((pairs, i) =>
@@ -44,11 +45,12 @@ const useShare = (date: string) => {
 
   const share = () => {
     const shareText = `${`STATLE ${date} ${
-      currentRound - 1
+      won ? currentRound - 1 : "X"
     }/6`}\n\n${generateShareResult(
       nameHistories,
       correctSpotsHistories,
-      wrongSpotHistories
+      wrongSpotHistories,
+      won
     )}\n`;
     /**
      * ぱちょこんでは Twitter のシェア画面を、他はネイティブのシェア画面を出す
