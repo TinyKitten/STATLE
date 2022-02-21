@@ -202,7 +202,7 @@ export const STATIONS = [
   "AWAZU",
   "MEIHO",
   "MATTO",
-  "UMANU",
+  "UNUMA",
   "HOZUE",
   "TOIDE",
   "UNOKE",
