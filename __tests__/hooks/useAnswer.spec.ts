@@ -7,12 +7,12 @@ jest.mock("../../hooks/useSeed", () => () => ({
 
 describe("useAnswer", () => {
   it("同じシード値で同じ駅が出てくる", () => {
-    const result = renderHook(() => useAnswer(0)).result;
+    const { result } = renderHook(() => useAnswer(0));
 
     expect(result.current).toBe("TOMAI");
   });
   it("useSeedがちゃんと呼ばれてる", () => {
-    const result = renderHook(() => useAnswer()).result;
+    const { result } = renderHook(() => useAnswer());
 
     expect(result.current).toBe("OWANI");
   });
