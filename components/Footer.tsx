@@ -32,8 +32,11 @@ const HyperLink = styled.a`
   text-decoration: underline;
 `;
 
-const GitHubLink = styled(HyperLink)`
+const GitHubLink = styled.p`
   margin-top: 8px;
+  text-align: center;
+  color: ${({ theme }) => theme.textSub};
+  font-weight: bold;
 `;
 
 const WordleLinkContainer = styled.p`
@@ -59,13 +62,8 @@ const Footer = () => {
       <AuthorLinkBlock>
         <HyperLink href="https://tinykitten.me">ポートフォリオ</HyperLink>
         <HyperLink href="https://twitter.com/tinykitten8">Twitter</HyperLink>
-        <HyperLink href="https://blog.tinykitten.me/posts/statle/">
-          開発秘話と言うにはおこがましい記事
-        </HyperLink>
       </AuthorLinkBlock>
-      <GitHubLink href="https://github.com/TinyKitten/STATLE/">
-        開発に貢献する
-      </GitHubLink>
+      <GitHubLink>開発者多忙で開発休止中</GitHubLink>
     </Contianer>
   );
 };
